@@ -1,0 +1,13 @@
+<html xmlns:th="http://www.thymeleaf.org" data-layout-decorator="fragments/layout">
+  <!-- 
+  	上面的data-layout-decorator(相当于layout:decorate)指定了使用fragments目录下layout.html页面作为布局页面
+  		
+  		th:include标签指定了layout模板中定义的fragment htmlhead片段来修饰head标签体
+  		注：th:include与th:replace稍有不同，include表示将片段内容替换到该标签体中，而replace是整个替换
+  		
+  		th:with用来定义局部变量，下面的定义信息中，可以使用${title}来访问定义的局部变量
+   -->
+  <head th:include="fragments/layout :: htmlhead" th:with="title='favorites'">
+  	<meta name="keywords" content="theleam,spring boot">
+  </head>
+</html>
