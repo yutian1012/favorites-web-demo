@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+</body>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+		var oper=/*[[${oper}]]*/ 'FAIL';
+		if(oper=='SUCCESS'){
+			alert("提交订单成功！");
+		}else{
+			alert("提交订单失败!");
+		}
+		location.href="/order";
+	/*]]>*/
+</script>
+</html>

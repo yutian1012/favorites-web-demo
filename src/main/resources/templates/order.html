@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>订单提交测试页面</title>
+</head>
+<body>
+	<a th:href="@{/submitOrder}">提交订单</a><br>
+	<a href="javascript:void(0);" th:onclick="'javascript:submitOrder()'">ajax提交数据</a>
+</body>
+<script th:src="@{/webjars/jquery/2.0.0/jquery.min.js}"></script>
+<script>
+	function submitOrder(){
+		$.post("/ajaxSubmitOrder",function(data){
+			if(data.result=='SUCCESS'){
+				alert("提交订单成功！");
+			}else{
+				alert("提交订单失败!");
+			}
+		});
+	}
+	
+</script>
+</html>
