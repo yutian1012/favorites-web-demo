@@ -2,6 +2,7 @@ package com.favorites.favoriteswebdemo.controller;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -9,7 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.favorites.favoriteswebdemo.common.Const;
 import com.favorites.favoriteswebdemo.common.ExceptionMsg;
 import com.favorites.favoriteswebdemo.common.Response;
 import com.favorites.favoriteswebdemo.domain.User;
@@ -76,12 +80,22 @@ public class UserController {
 			Response res=new Response(ExceptionMsg.SUCCESS);
 			res.setUrl(preUrl);
 			
+			saveSession(loginUser);
+			
 			return res;
 		} catch (Exception e) {
 			// TODO: handle exception
 			logger.error("login failed, ", e);
 			return new Response(ExceptionMsg.FAILED);
 		}
+	}
+	/**
+	 * 将登录用户信息保存到session中
+	 * @param user
+	 */
+	public void saveSession(User user) {
+		HttpServletRequest request=((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		request.getSession().setAttribute(Const.LOGIN_SESSION_KEY, user);
 	}
 	
 }
