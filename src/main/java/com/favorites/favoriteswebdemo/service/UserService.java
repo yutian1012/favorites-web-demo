@@ -10,4 +10,8 @@ public interface UserService {
 	public User save(User user);
 	
 	public User findByUserNameOrEmail(String userName,String email);
+	
+	public int setOutDateAndValidataCode(String outDate, String validataCode, String email);
+	
+	public void setNewPassword(String passWord, String email);
 }

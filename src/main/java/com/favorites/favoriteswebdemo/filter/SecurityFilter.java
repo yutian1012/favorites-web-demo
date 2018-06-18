@@ -42,13 +42,15 @@ public class SecurityFilter implements Filter{
 		String uri = req.getRequestURI();
 		if (req.getSession().getAttribute(Const.LOGIN_SESSION_KEY) == null) {
 			//判断访问的地址是否允许匿名访问
-			if (containsSuffix(uri)  || GreenUrlSet.contains(uri)) {
+			if (containsSuffix(uri)  || GreenUrlSet.contains(uri)|| containsKey(uri)) {
 				logger.debug("don't check  url , " + uri);
 				chain.doFilter(request, response);
 				return;
 			}
-			//请求转发到登录页面
+			//请求转发到登录页面r
 			req.getRequestDispatcher("/login").forward(request,response);
+			
+			return;
 		}
 		
 		chain.doFilter(request, response);
@@ -76,12 +78,38 @@ public class SecurityFilter implements Filter{
 		}
 	}
 	
+	/**
+	 * @param url
+	 * @return
+	 * @author neo
+	 * @date 2016-5-4
+	 */
+	private boolean containsKey(String url) {
+
+		if (url.contains("/media/")
+				|| url.contains("/login")||url.contains("/user/login")
+				|| url.contains("/register")||url.contains("/user/regist")||url.contains("/index")
+				|| url.contains("/forgotPassword")||url.contains("/user/sendForgotPasswordEmail")
+				|| url.contains("/newPassword")||url.contains("/user/setNewPassword")
+				|| (url.contains("/collector") && !url.contains("/collect/detail/"))
+				|| url.contains("/collect/standard/")||url.contains("/collect/simple/")
+				|| url.contains("/user")||url.contains("/favorites")||url.contains("/comment")
+				|| url.startsWith("/lookAround/standard/")
+				|| url.startsWith("/lookAround/simple/")
+				|| url.startsWith("/user/")
+				|| url.startsWith("/feedback")
+				|| url.startsWith("/standard/")
+				|| url.startsWith("/collect/standard/lookAround/")
+				|| url.startsWith("/collect/simple/lookAround/")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	
 	@Override
 	public void destroy() {
 	}
-
-
-	
 
 }
